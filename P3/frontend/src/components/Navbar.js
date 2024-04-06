@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 const Navbar = (props) => {
     return (
         <div class="navbar">
-            <a href="profile.html">
+            <Link to="/accounts/profile/view">
                 <img style={{ borderRadius: "50%" }} src={require("./images/profile.png")} alt="" width="30" height="30" />
                 <p>Profile</p>
-            </a>
+            </Link>
             <a href="dashboard.html"><img src={require("./images/home.png")} alt="" width="30" height="30" />
                 <p>Home</p>
             </a>

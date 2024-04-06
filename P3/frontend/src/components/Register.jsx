@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Register.css';
+import { useNavigate } from "react-router-dom";
 
-function RegisterPage() {
-  const [errors, setErrors] = useState([])
+function Register() {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -12,6 +15,16 @@ function RegisterPage() {
     first_name: '',
     last_name: ''
   });
+
+  const [formErrors, setFormErrors] = useState({
+    username: '',
+    email: '',
+    password: '',
+    password_verify: '',
+    first_name: '',
+    last_name: ''
+  });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,15 +40,23 @@ function RegisterPage() {
     try {
       const response = await axios.post('http://127.0.0.1:8000/accounts/register/', formData);
       console.log(response.data);
-      // Handle successful response, redirect, show success message, etc.
+      navigate("/accounts/login")
     } catch (error) {
-      console.error('An error occurred:', error.response.data);
-      // Handle error, show error message, etc.
+      let errors = error.response.data;
+      navigate("/accounts/login")
+      setFormErrors({
+        username: errors.username ? errors.username[0] : '',
+        email: errors.email ? errors.email[0] : '',
+        password: errors.password ? errors.password[0] : '',
+        password_verify: errors.password_verify ? errors.password_verify[0] : '',
+        first_name: errors.first_name ? errors.first_name[0] : '',
+        last_name: errors.last_name ? errors.last_name[0] : ''
+      });
     }
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -48,6 +69,7 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          {formErrors.username && <div className="error">{formErrors.username}</div>}
         </div>
         <div>
           <label htmlFor="email">Email:</label>
@@ -59,6 +81,7 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          {formErrors.email && <div className="error">{formErrors.email}</div>}
         </div>
         <div>
           <label htmlFor="password">Password:</label>
@@ -70,6 +93,7 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          {formErrors.password && <div className="error">{formErrors.password}</div>}
         </div>
         <div>
           <label htmlFor="password_verify">Verify Password:</label>
@@ -81,6 +105,7 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          {formErrors.password_verify && <div className="error">{formErrors.password_verify}</div>}
         </div>
         <div>
           <label htmlFor="first_name">First Name:</label>
@@ -92,6 +117,7 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          {formErrors.first_name && <div className="error">{formErrors.first_name}</div>}
         </div>
         <div>
           <label htmlFor="last_name">Last Name:</label>
@@ -103,11 +129,15 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          {formErrors.last_name && <div className="error">{formErrors.last_name}</div>}
         </div>
         <button type="submit">Register</button>
       </form>
+      <div className="login-link">
+        Already have an account? <a href="/accounts/login">Login</a>
+      </div>
     </div>
   );
 }
 
-export default RegisterPage;
+export default Register;
