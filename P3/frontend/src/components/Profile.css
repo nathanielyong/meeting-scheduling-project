@@ -2,17 +2,13 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid rgb(190, 189, 189);
+  border-radius: 10px;
   background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .profile-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -21,11 +17,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-.profile-data {
-  text-align: center;
+  margin-right: 20px;
 }
 
 .data-label {
@@ -33,66 +25,63 @@
   margin-right: 5px;
 }
 
-.loading-text {
-  font-style: italic;
-  color: #888;
-  margin-bottom: 10px;
-}
-
 .profile-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  /* Ensures buttons span the entire width */
-  max-width: 400px;
-  /* Adjust as needed */
-}
-
-.edit-profile-btn,
-.set-availabilities-btn {
-  flex: 1;
-  /* Equal flex distribution for both buttons */
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .edit-profile-btn {
-  background-color: #007bff;
-  color: white;
-  margin-right: 5px;
-  /* Adjust the gap between buttons */
+  background-color: green;
 }
 
+.edit-profile-btn:hover {
+  background-color: rgb(0, 88, 0);
+}
+
+.label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input[type="time"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+}
+
+.clear-fields-btn,
 .set-availabilities-btn {
-  background-color: #28a745;
-  color: white;
-  margin-left: 5px;
-  /* Adjust the gap between buttons */
+  background-color: green;
 }
 
-.edit-profile-btn:hover,
 .set-availabilities-btn:hover {
-  opacity: 0.8;
+  background-color: rgb(0, 88, 0);
 }
 
-@media (max-width: 768px) {
-  .profile-actions {
-    flex-direction: column;
-    align-items: center;
-  }
+.clear-fields-btn {
+  background-color: rgb(239, 0, 0);
+}
 
-  .edit-profile-btn,
-  .set-availabilities-btn {
-    margin-right: 0;
-    margin-bottom: 10px;
-    width: 100%;
-  }
+.clear-fields-btn:hover {
+  background-color: rgb(176, 1, 1);
+}
 
-  .set-availabilities-btn {
-    margin-left: 0;
-  }
+.btn-container {
+  margin-top: 10px;
+}
+
+button {
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
 }

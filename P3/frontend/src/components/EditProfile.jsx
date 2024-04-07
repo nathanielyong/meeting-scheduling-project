@@ -19,7 +19,7 @@ const EditProfile = () => {
         password_verify: '',
         first_name: '',
         last_name: ''
-      });
+    });
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -76,6 +76,10 @@ const EditProfile = () => {
             });
 
         }
+    };
+
+    const handleBack = () => {
+        navigate('/accounts/profile/view');
     };
 
     return (
@@ -136,9 +140,14 @@ const EditProfile = () => {
                         />
                         {formErrors.password_verify && <div className="error">{formErrors.password_verify}</div>}
                     </div>
-                    <button type="submit" className="save-btn">
-                        Save
-                    </button>
+                    <div className="btn-container">
+                        <button type="button" onClick={handleBack} className="back-btn">
+                            Back
+                        </button>
+                        <button type="submit" className="save-btn">
+                            Save
+                        </button>
+                    </div>
                 </form>
             }
         </div>

@@ -31,7 +31,7 @@ function Login() {
       navigate("/calendar");
     } catch (error) {
       if (error.response && error.response.data) {
-        setErrors(error.response.data["detail"]); // Setting errors from API response
+        setErrors(error.response.data["detail"]);
         console.log(error.response.data["detail"]);
       }
     }

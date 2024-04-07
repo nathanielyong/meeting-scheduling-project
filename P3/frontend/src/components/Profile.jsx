@@ -3,9 +3,47 @@ import api from '../utils/api';
 import './Profile.css';
 import profileImage from './images/profile.png';
 import { useNavigate } from "react-router-dom";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
 
 const Profile = () => {
   const navigate = useNavigate();
+
+  const [day, setDay] = useState(new Date());
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [timeError, setTimeError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleDayChange = (day) => {
+    setDay(day);
+  };
+
+  const formatDay = (date) => {
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDay()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleStartTimeChange = (event) => {
+    setStartTime(event.target.value);
+    if (endTime && event.target.value > endTime) {
+      setTimeError('Start time cannot be after end time.');
+    } else {
+      setTimeError('');
+    }
+  };
+
+  const handleEndTimeChange = (event) => {
+    setEndTime(event.target.value);
+    if (startTime && event.target.value < startTime) {
+      setTimeError('End time cannot be before start time.');
+    } else {
+      setTimeError('');
+    }
+  };
 
   const [userData, setUserData] = useState(null);
 
@@ -23,14 +61,43 @@ const Profile = () => {
   }, []);
 
   const handleEditProfile = () => {
-    // Implement your edit profile logic here
     console.log('Edit Profile clicked');
     navigate("/accounts/profile/edit");
   };
 
-  const handleSetAvailabilities = () => {
-    // Implement your set availabilities logic here
-    console.log('Set Availabilities clicked');
+  const handleSetAvailabilities = async () => {
+
+    if (startTime.trim() === '' || endTime.trim() === '') {
+      setTimeError('Please provide both start time and end time.');
+      return;
+    }
+    if (startTime > endTime) {
+      setTimeError('End time cannot be before start time.');
+      return;
+    }
+    setTimeError('');
+
+    try {
+      const response = await api.post(
+        'http://127.0.0.1:8000/accounts/availabilities/add/ ',{
+          start_time: formatDay(day) + " " + startTime,
+          end_time: formatDay(day) + " " + endTime
+        }
+        
+      );
+      setSuccessMessage(response.data.message)
+      console.log('Profile updated successfully:', response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  const handleClearFields = () => {
+    setDay(new Date());
+    setStartTime('');
+    setEndTime('');
+    setTimeError('');
+    setSuccessMessage('');
   };
 
   return (
@@ -54,9 +121,40 @@ const Profile = () => {
         <button className="edit-profile-btn" onClick={handleEditProfile}>
           Edit Profile
         </button>
-        <button className="set-availabilities-btn" onClick={handleSetAvailabilities}>
-          Set Availabilities
-        </button>
+      </div>
+      <div>
+        <label>Select a Date:</label>
+        <DatePicker
+          selected={day}
+          onChange={handleDayChange}
+          dayFormat="yyyy-MM-dd"
+        />
+        <br />
+
+        <label>Start Time:</label>
+        <input
+          type="time"
+          value={startTime}
+          onChange={handleStartTimeChange}
+        />
+        <br />
+
+        <label>End Time:</label>
+        <input
+          type="time"
+          value={endTime}
+          onChange={handleEndTimeChange}
+        />
+        {timeError && <p className="error-message">{timeError}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        <div className="btn-container">
+          <button className="clear-fields-btn" onClick={handleClearFields}>
+            Clear Fields
+          </button>
+          <button className="set-availabilities-btn" onClick={handleSetAvailabilities}>
+            Set Availabilities
+          </button>
+        </div>
       </div>
     </div>
   );
