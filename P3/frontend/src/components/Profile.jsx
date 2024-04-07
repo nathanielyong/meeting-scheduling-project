@@ -23,7 +23,7 @@ const Profile = () => {
 
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDay()).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
 
@@ -34,7 +34,13 @@ const Profile = () => {
     } else {
       setTimeError('');
     }
+
+    if (successMessage){
+      setSuccessMessage("");
+    }
   };
+
+  console.log(day);
 
   const handleEndTimeChange = (event) => {
     setEndTime(event.target.value);
@@ -42,6 +48,9 @@ const Profile = () => {
       setTimeError('End time cannot be before start time.');
     } else {
       setTimeError('');
+    }
+    if (successMessage){
+      setSuccessMessage("");
     }
   };
 
