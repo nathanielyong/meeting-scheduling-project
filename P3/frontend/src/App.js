@@ -15,7 +15,9 @@ function App() {
   return (
     <BrowserRouter >
       <div className="container">
-        <Navbar />
+        <HideOrShowNavbar>
+          <Navbar />
+        </HideOrShowNavbar>
         <div className="content-container" style={{ marginLeft: "90px" }}>
           <Routes >
             <Route path='/calendar' element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
