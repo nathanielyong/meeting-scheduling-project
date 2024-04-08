@@ -7,43 +7,39 @@ import Logout from './components/Logout'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import EditProfile from './components/EditProfile'
-import { BrowserRouter, Route, Routes, useLocation} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import ProtectedRoute from './utils/ProtectedRoute';
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <div class="container">
-        <HideOrShowNavbar>
-          <Navbar />
-        </HideOrShowNavbar>
-        <div class="content-container">
-          <Routes>
+    <BrowserRouter >
+      <div className="container">
+        <Navbar />
+        <div className="content-container" style={{ marginLeft: "90px" }}>
+          <Routes >
             <Route path='/calendar' element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
-            <Route path='/accounts/profile/view' element ={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path='/accounts/profile/edit' element = {<ProtectedRoute><EditProfile /></ProtectedRoute>} />
-            <Route path = "accounts/register" element={<Register />} />
-            <Route path = "accounts/login" element={<Login />} />
-            <Route path = "accounts/logout" element={<Logout />} />
-            // can add more routes here with <Route />
+            <Route path='/accounts/profile/view' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path='/accounts/profile/edit' element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
+            <Route path="accounts/register" element={<Register />} />
+            <Route path="accounts/login" element={<Login />} />
+            <Route path="accounts/logout" element={<Logout />} />
           </Routes>
-
         </div>
       </div>
     </BrowserRouter>
   );
 }
 
-const HideOrShowNavbar = ({children}) => {
+const HideOrShowNavbar = ({ children }) => {
 
   const location = useLocation();
-  let showBar= false;
+  let showBar = false;
 
 
-  if (location.pathname.includes('/register') || location.pathname.includes('/login')){
+  if (location.pathname.includes('/register') || location.pathname.includes('/login')) {
     showBar = false;
-  } else{
+  } else {
     showBar = true;
   }
 

@@ -1,11 +1,12 @@
- .navbar {
+.navbar {
     position: fixed;
     align-self: flex-start;
     background-color: #fff;
     height: 100vh;
     width: 90px;
     border-right: 1px solid #ddd;
-}
+
+  }
 
 .navbar a {
     display: flex;
@@ -26,4 +27,21 @@
  
 .navbar a.active {
     background-color: #ddd;
+}
+
+@media only screen and (max-width: 700px) {  
+    .navbar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+    
+      }
+
+    .navbar a {
+        min-width: 80px;
+    }
 }
